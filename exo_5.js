@@ -1,9 +1,9 @@
 function hasPairWithSum(data, k) {
-  const numbers = new Set(data);
+  const seen = new Set();
 
-  for (let num of numbers) {
+  for (let num of data) {
     let complement = k - num;
-    if (complement !== num && numbersSet.has(complement)) {
+    if (seen.has(complement)) {
       return true; 
     }
     seen.add(num);
