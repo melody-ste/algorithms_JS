@@ -35,106 +35,21 @@ const numbers = tokens.map(t => {
   return n;
 });
 
-// ========== BUBBLE SORT ==========
 
-class BubbleSort {
-  constructor() { this.comparisons = 0; }
-  sort(array) {
-    const a = array.slice();
-    const n = a.length;
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n - 1 - i; j++) {
-        this.comparisons++;
-        if (a[j] > a[j + 1]) {
-          [a[j], a[j+1]] = [a[j+1], a[j]];
-        }
-      }
-    }
-    return a;
+class FusionSort {
+  mergeSort(array){
+    let length = array.length
+    if (length < 2) return; 
+    let middle = Math.floor(length/2);
+    let leftArray = array.slice(0,middle);
+    let rightArray = array.slice(middle)
+    
+    return this.merge(
+      this.mergeSort(leftArray),
+      this.mergeSort(rightArray)
+    );
   }
+
+
+  merge(){}
 }
-
-const b = new BubbleSort();
-const sortedBubble = b.sort(numbers);
-
-console.log(`Tri à bulle: ${b.comparisons} comparaisons - ${JSON.stringify(sortedBubble)}`);
-
-// ========== INSERTION SORT ==========
-
-class InsertionSort {
-  constructor() { this.comparisons = 0; }
-  sort(arr) {
-    const a = arr.slice();
-    const n = a.length;
-    for (let i = 1; i < n; i++) {
-      const key = a[i];
-      let j = i - 1;
-      while (j >= 0) {
-        this.comparisons++;
-        if (a[j] > key) {
-          a[j+1] = a[j];
-          j--;
-        } else {
-          break;
-        }
-      }
-      a[j+1] = key;
-    }
-    return a;
-  }
-}
-
-const ins = new InsertionSort();
-const sortedInsertion = ins.sort(numbers);
-
-console.log(`Tri par insertion: ${ins.comparisons} comparaisons - ${JSON.stringify(sortedInsertion)}`);
-
-// ========== SELECTION SORT ==========
-
-class SelectionSort {
-  constructor() { this.comparisons = 0; }
-  sort(arr) {
-    const a = arr.slice();
-    const n = a.length;
-    for (let i = 0; i < n - 1; i++) {
-      let minIdx = i;
-      for (let j = i + 1; j < n; j++) {
-        this.comparisons++;
-        if (a[j] < a[minIdx]) minIdx = j;
-      }
-      if (minIdx !== i) [a[i], a[minIdx]] = [a[minIdx], a[i]];
-    }
-    return a;
-  }
-}
-
-const s = new SelectionSort();
-const sortedSelection = s.sort(numbers);
-
-console.log(`Tri par sélection: ${s.comparisons} comparaisons - ${JSON.stringify(sortedSelection)}`);
-
-// ========== QUICK SORT ==========
-
-class QuickSort {
-  constructor() { this.comparisons = 0; }
-  sort(arr) {
-    return this._quick(arr.slice());
-  }
-  _quick(a) {
-    if (a.length <= 1) return a;
-    const pivot = a[0]; 
-    const less = [];
-    const greater = [];
-    for (let i = 1; i < a.length; i++) {
-      this.comparisons++;
-      if (a[i] < pivot) less.push(a[i]);
-      else greater.push(a[i]);
-    }
-    return this._quick(less).concat([pivot], this._quick(greater));
-  }
-}
-
-const q = new QuickSort();
-const sortedQuick = q.sort(numbers);
-
-console.log(`Tri rapide: ${q.comparisons} comparaisons - ${JSON.stringify(sortedQuick)}`);
