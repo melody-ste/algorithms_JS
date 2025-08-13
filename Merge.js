@@ -36,10 +36,14 @@ const numbers = tokens.map(t => {
 });
 
 
-class FusionSort {
+class MergeSort {
+  constructor() {
+    this.comparisons = 0; 
+  }
+
   mergeSort(array){
     let length = array.length
-    if (length < 2) return; 
+    if (length < 2) return array; 
     let middle = Math.floor(length/2);
     let leftArray = array.slice(0,middle);
     let rightArray = array.slice(middle)
@@ -51,5 +55,34 @@ class FusionSort {
   }
 
 
-  merge(){}
+  merge(leftArray, rightArray){
+    let combined = []
+    let i = 0
+    let j = 0
+
+    while( i < leftArray.length && j < rightArray.length) {
+      this.comparisons++;
+      if( leftArray[i] < rightArray[j] ){
+        combined.push(leftArray[i])
+        i++
+      }else{
+        combined.push(rightArray[j])
+        j++
+      }
+    }
+    while( i < leftArray.length){
+      combined.push(leftArray[i])
+      i++
+    }
+    while( j < rightArray.length){
+      combined.push(rightArray[j])
+      j++
+    }
+    return combined
+  }
 }
+
+const b = new MergeSort();
+const sortedMerge = b.mergeSort(numbers);
+
+console.log(`Tri par merge: ${b.comparisons} comparaisons - ${JSON.stringify(sortedMerge)}`);
